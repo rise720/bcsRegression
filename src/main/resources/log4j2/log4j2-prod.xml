@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- status:用于设置log4j2自身内部的信息输出级别; monitorInterval:监控该配置文件变化的时间间隔（单位：秒），程序运行过程中，修改配置文件，程序自动加载。 -->
+<configuration status="error" monitorInterval="600">
+    <!-- 先定义所有的appender -->
+    <appenders>
+        <!-- 这个输出控制台的配置 -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <!-- 这个都知道是输出日志的格式 -->
+            <PatternLayout charset="UTF-8" pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n"/>
+        </Console>
+
+        <RollingFile name="RollingFile" fileName="logs/bcsRegression-log4j2.log"
+                     filePattern="logs/$${date:yyyy-MM}/log4j2-%d{MM-dd-yyyy}-%i.log.gz">
+            <PatternLayout charset="UTF-8" pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %t | %msg%xEx%n"/>
+            <SizeBasedTriggeringPolicy size="20MB"/>
+        </RollingFile>
+
+    </appenders>
+
+    <!-- 然后定义logger，只有定义了logger并引入的appender，appender才会生效 -->
+    <loggers>
+        <!-- 建立一个默认的root的logger -->
+        <root level="info">
+            <appender-ref ref="RollingFile"/>
+        </root>
+    </loggers>
+</configuration>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cathay.bcsRegression.dao.regression.TestCaseMapper">
+  <resultMap id="BaseResultMap" type="com.cathay.bcsRegression.entity.TestCase">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="CASE_ID" jdbcType="VARCHAR" property="caseId" />
+    <result column="CASE_NAME" jdbcType="VARCHAR" property="caseName" />
+    <result column="FROM_MODULE_ID" jdbcType="BIGINT" property="fromModuleId" />
+    <result column="VERSION" jdbcType="INTEGER" property="version" />
+    <result column="IS_DELETE" jdbcType="INTEGER" property="isDelete" />
+    <result column="CREATED_BY" jdbcType="VARCHAR" property="createdBy" />
+    <result column="CREATED_TIME" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="UPDATED_BY" jdbcType="VARCHAR" property="updatedBy" />
+    <result column="UPDATED_TIME" jdbcType="TIMESTAMP" property="updatedTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, CASE_ID, CASE_NAME, FROM_MODULE_ID, VERSION, IS_DELETE, CREATED_BY, CREATED_TIME,
+    UPDATED_BY, UPDATED_TIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from TEST_CASE
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from TEST_CASE
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insert" parameterType="com.cathay.bcsRegression.entity.TestCase">
+    insert into TEST_CASE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="caseId != null">
+        CASE_ID,
+      </if>
+      <if test="caseName != null">
+        CASE_NAME,
+      </if>
+      <if test="fromModuleId != null">
+        FROM_MODULE_ID,
+      </if>
+      <if test="isDelete != null">
+        IS_DELETE,
+      </if>
+      <if test="createdBy != null">
+        CREATED_BY,
+      </if>
+      <if test="updatedBy != null">
+        UPDATED_BY,
+      </if>
+        VERSION
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="caseId != null">
+        #{caseId,jdbcType=VARCHAR},
+      </if>
+      <if test="caseName != null">
+        #{caseName,jdbcType=VARCHAR},
+      </if>
+      <if test="fromModuleId != null">
+        #{fromModuleId,jdbcType=BIGINT},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedBy != null">
+        #{updatedBy,jdbcType=VARCHAR},
+      </if>
+        1
+    </trim>
+  </insert>
+  <update id="update" parameterType="com.cathay.bcsRegression.entity.TestCase">
+    update TEST_CASE
+    <set>
+      <if test="caseId != null">
+        CASE_ID = #{caseId,jdbcType=VARCHAR},
+      </if>
+      <if test="caseName != null">
+        CASE_NAME = #{caseName,jdbcType=VARCHAR},
+      </if>
+      <if test="fromModuleId != null">
+        FROM_MODULE_ID = #{fromModuleId,jdbcType=BIGINT},
+      </if>
+      <if test="version != null">
+        VERSION = #{version,jdbcType=INTEGER} + 1,
+      </if>
+      <if test="isDelete != null">
+        IS_DELETE = #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="createdBy != null">
+        CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedBy != null">
+        UPDATED_BY = #{updatedBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+    <if test="version != null">
+      and VERSION = #{version,jdbcType=INTEGER}
+    </if>
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cathay.bcsRegression.entity.TestCase">
+    update TEST_CASE
+    set CASE_ID = #{caseId,jdbcType=VARCHAR},
+        CASE_NAME = #{caseName,jdbcType=VARCHAR},
+        FROM_MODULE_ID = #{fromModuleId,jdbcType=BIGINT},
+        VERSION = #{version,jdbcType=INTEGER},
+        IS_DELETE = #{isDelete,jdbcType=INTEGER},
+        CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+        CREATED_TIME = #{createdTime,jdbcType=TIMESTAMP},
+        UPDATED_BY = #{updatedBy,jdbcType=VARCHAR},
+        UPDATED_TIME = #{updatedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

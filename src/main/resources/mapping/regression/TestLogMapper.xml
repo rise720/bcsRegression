@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cathay.bcsRegression.dao.regression.TestLogMapper">
+  <resultMap id="BaseResultMap" type="com.cathay.bcsRegression.entity.TestLog">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="BATCH_ID" jdbcType="BIGINT" property="batchId" />
+    <result column="CASE_ID" jdbcType="BIGINT" property="caseId" />
+    <result column="MSG_LEVEL" jdbcType="VARCHAR" property="msgLevel" />
+    <result column="MESSAGE" jdbcType="VARCHAR" property="message" />
+    <result column="VERSION" jdbcType="INTEGER" property="version" />
+    <result column="IS_DELETE" jdbcType="INTEGER" property="isDelete" />
+    <result column="CREATED_BY" jdbcType="VARCHAR" property="createdBy" />
+    <result column="CREATED_TIME" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="UPDATED_BY" jdbcType="VARCHAR" property="updatedBy" />
+    <result column="UPDATED_TIME" jdbcType="TIMESTAMP" property="updatedTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, BATCH_ID, CASE_ID, MSG_LEVEL, MESSAGE, VERSION, IS_DELETE, CREATED_BY, CREATED_TIME, 
+    UPDATED_BY, UPDATED_TIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TASK_LOG
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectList" parameterType="com.cathay.bcsRegression.entity.TestLog" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from TASK_LOG
+    where 1 = 1
+    <if test="batchId != null">
+      AND BATCH_ID = #{batchId,jdbcType=BIGINT}
+    </if>
+    <if test="caseId != null">
+      AND CASE_ID = #{caseId,jdbcType=BIGINT}
+    </if>
+    <if test="msgLevel != null">
+      AND MSG_LEVEL = #{msgLevel,jdbcType=VARCHAR}
+    </if>
+    <if test="message != null">
+      AND MESSAGE = #{message,jdbcType=VARCHAR}
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from TASK_LOG
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.cathay.bcsRegression.entity.TestLog">
+    insert into TASK_LOG
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="batchId != null">
+        BATCH_ID,
+      </if>
+      <if test="caseId != null">
+        CASE_ID,
+      </if>
+      <if test="msgLevel != null">
+        MSG_LEVEL,
+      </if>
+      <if test="message != null">
+        MESSAGE,
+      </if>
+      <if test="isDelete != null">
+        IS_DELETE,
+      </if>
+      <if test="createdBy != null">
+        CREATED_BY,
+      </if>
+      <if test="updatedBy != null">
+        UPDATED_BY,
+      </if>
+      VERSION
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="batchId != null">
+        #{batchId,jdbcType=BIGINT},
+      </if>
+      <if test="caseId != null">
+        #{caseId,jdbcType=BIGINT},
+      </if>
+      <if test="msgLevel != null">
+        #{msgLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null">
+        #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedBy != null">
+        #{updatedBy,jdbcType=VARCHAR},
+      </if>
+        1
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cathay.bcsRegression.entity.TestLog">
+    update TASK_LOG
+    <set>
+      <if test="batchId != null">
+        BATCH_ID = #{batchId,jdbcType=BIGINT},
+      </if>
+      <if test="caseId != null">
+        CASE_ID = #{caseId,jdbcType=BIGINT},
+      </if>
+      <if test="msgLevel != null">
+        MSG_LEVEL = #{msgLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null">
+        MESSAGE = #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        VERSION = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="isDelete != null">
+        IS_DELETE = #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="createdBy != null">
+        CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        CREATED_TIME = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null">
+        UPDATED_BY = #{updatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedTime != null">
+        UPDATED_TIME = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cathay.bcsRegression.entity.TestLog">
+    update TASK_LOG
+    set BATCH_ID = #{batchId,jdbcType=BIGINT},
+      CASE_ID = #{caseId,jdbcType=BIGINT},
+      MSG_LEVEL = #{msgLevel,jdbcType=VARCHAR},
+      MESSAGE = #{message,jdbcType=VARCHAR},
+      VERSION = #{version,jdbcType=INTEGER},
+      IS_DELETE = #{isDelete,jdbcType=INTEGER},
+      CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      CREATED_TIME = #{createdTime,jdbcType=TIMESTAMP},
+      UPDATED_BY = #{updatedBy,jdbcType=VARCHAR},
+      UPDATED_TIME = #{updatedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

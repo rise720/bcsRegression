@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="error" monitorInterval="600">
+    <appenders>
+        <!-- 这个输出控制台的配置 -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <!-- 这个都知道是输出日志的格式 -->
+            <PatternLayout charset="UTF-8" pattern="[%X{LOG_TRACE}] %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n"/>
+        </Console>
+    </appenders>
+
+    <!-- 然后定义logger，只有定义了logger并引入的appender，appender才会生效 -->
+    <loggers>
+        <!-- 建立一个默认的root的logger -->
+        <root level="debug">
+            <!-- Console日志输出，正式发布注释掉 -->
+            <appender-ref ref="Console"/>
+        </root>
+    </loggers>
+</configuration>

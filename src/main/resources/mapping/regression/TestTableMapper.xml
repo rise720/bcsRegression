@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cathay.bcsRegression.dao.regression.TestTableMapper">
+  <resultMap id="BaseResultMap" type="com.cathay.bcsRegression.entity.TestTable">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="TABLE_ID" jdbcType="VARCHAR" property="tableId" />
+    <result column="TABLE_NAME" jdbcType="VARCHAR" property="tableName" />
+    <result column="TABLE_SCHEMA" jdbcType="VARCHAR" property="tableSchema" />
+    <result column="TABLE_KEYS" jdbcType="VARCHAR" property="tableKeys" />
+    <result column="VERSION" jdbcType="INTEGER" property="version" />
+    <result column="IS_DELETE" jdbcType="INTEGER" property="isDelete" />
+    <result column="CREATED_BY" jdbcType="VARCHAR" property="createdBy" />
+    <result column="CREATED_TIME" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="UPDATED_BY" jdbcType="VARCHAR" property="updatedBy" />
+    <result column="UPDATED_TIME" jdbcType="TIMESTAMP" property="updatedTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, TABLE_ID, TABLE_NAME, TABLE_SCHEMA, TABLE_KEYS, VERSION, IS_DELETE, CREATED_BY, 
+    CREATED_TIME, UPDATED_BY, UPDATED_TIME
+  </sql>
+  <select id="selectByTableId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TEST_TABLE
+    where TABLE_ID = #{tableId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectList" parameterType="com.cathay.bcsRegression.entity.TestTable" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from TEST_TABLE
+    where 1 = 1
+    <if test="id != null">
+      and id = #{id,jdbcType=BIGINT}
+    </if>
+    <if test="tableId != null">
+        and TABLE_ID = #{tableId,jdbcType=VARCHAR}
+    </if>
+    <if test="tableName != null">
+        and TABLE_NAME = #{tableName,jdbcType=VARCHAR}
+    </if>
+	<if test="tableSchema != null">
+		and TABLE_SCHEMA = #{tableSchema,jdbcType=VARCHAR}
+    </if>
+    <if test="tableKeys != null">
+        and TABLE_KEYS = #{tableKeys,jdbcType=VARCHAR}
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from TEST_TABLE
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.cathay.bcsRegression.entity.TestTable">
+    insert into TEST_TABLE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tableId != null">
+        TABLE_ID,
+      </if>
+      <if test="tableName != null">
+        TABLE_NAME,
+      </if>
+      <if test="tableSchema != null">
+        TABLE_SCHEMA,
+      </if>
+      <if test="tableKeys != null">
+        TABLE_KEYS,
+      </if>
+      <if test="isDelete != null">
+        IS_DELETE,
+      </if>
+      <if test="createdBy != null">
+        CREATED_BY,
+      </if>
+      <if test="updatedBy != null">
+        UPDATED_BY,
+      </if>
+      VERSION
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tableId != null">
+        #{tableId,jdbcType=VARCHAR},
+      </if>
+      <if test="tableName != null">
+        #{tableName,jdbcType=VARCHAR},
+      </if>
+      <if test="tableSchema != null">
+        #{tableSchema,jdbcType=VARCHAR},
+      </if>
+      <if test="tableKeys != null">
+        #{tableKeys,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedBy != null">
+        #{updatedBy,jdbcType=VARCHAR},
+      </if>
+      1
+    </trim>
+  </insert>
+  <update id="update" parameterType="com.cathay.bcsRegression.entity.TestTable">
+    update TEST_TABLE
+    <set>
+      <if test="tableId != null">
+        TABLE_ID = #{tableId,jdbcType=VARCHAR},
+      </if>
+      <if test="tableName != null">
+        TABLE_NAME = #{tableName,jdbcType=VARCHAR},
+      </if>
+      <if test="tableSchema != null">
+        TABLE_SCHEMA = #{tableSchema,jdbcType=VARCHAR},
+      </if>
+      <if test="tableKeys != null">
+        TABLE_KEYS = #{tableKeys,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        VERSION = #{version,jdbcType=INTEGER} + 1,
+      </if>
+      <if test="isDelete != null">
+        IS_DELETE = #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="createdBy != null">
+        CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        CREATED_TIME = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null">
+        UPDATED_BY = #{updatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedTime != null">
+        UPDATED_TIME = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where 1 = 1
+    <if test="id != null">
+      and id = #{id,jdbcType=BIGINT}
+    </if>
+    <if test="tableId != null">
+      and TABLE_ID = #{tableId,jdbcType=VARCHAR}
+    </if>
+    <if test="version != null">
+      and VERSION = #{version,jdbcType=INTEGER}
+    </if>
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cathay.bcsRegression.entity.TestTable">
+    update TEST_TABLE
+    set TABLE_ID = #{tableId,jdbcType=VARCHAR},
+      TABLE_NAME = #{tableName,jdbcType=VARCHAR},
+      TABLE_SCHEMA = #{tableSchema,jdbcType=VARCHAR},
+      TABLE_KEYS = #{tableKeys,jdbcType=VARCHAR},
+      VERSION = #{version,jdbcType=INTEGER},
+      IS_DELETE = #{isDelete,jdbcType=INTEGER},
+      CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      CREATED_TIME = #{createdTime,jdbcType=TIMESTAMP},
+      UPDATED_BY = #{updatedBy,jdbcType=VARCHAR},
+      UPDATED_TIME = #{updatedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

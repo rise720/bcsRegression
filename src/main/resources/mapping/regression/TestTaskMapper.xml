@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cathay.bcsRegression.dao.regression.TestTaskMapper">
+  <resultMap id="BaseResultMap" type="com.cathay.bcsRegression.entity.TestTask">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="BATCH_ID" jdbcType="BIGINT" property="batchId" />
+    <result column="CASE_ID" jdbcType="BIGINT" property="caseId" />
+    <result column="STATUS" jdbcType="INTEGER" property="status" />
+    <result column="CURRENT_PROCEDURE_SEQ" jdbcType="INTEGER" property="currentProcedureSeq" />
+    <result column="LOG_URL" jdbcType="VARCHAR" property="logUrl" />
+    <result column="VERSION" jdbcType="INTEGER" property="version" />
+    <result column="IS_DELETE" jdbcType="INTEGER" property="isDelete" />
+    <result column="CREATED_BY" jdbcType="VARCHAR" property="createdBy" />
+    <result column="CREATED_TIME" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="UPDATED_BY" jdbcType="VARCHAR" property="updatedBy" />
+    <result column="UPDATED_TIME" jdbcType="TIMESTAMP" property="updatedTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, BATCH_ID, CASE_ID, STATUS, CURRENT_PROCEDURE_SEQ, LOG_URL, VERSION, IS_DELETE, 
+    CREATED_BY, CREATED_TIME, UPDATED_BY, UPDATED_TIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TEST_TASK
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectNextProcess" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from TEST_TASK tt
+    where tt.STATUS = 0
+      AND tt.BATCH_ID = (
+        select min(tt2.BATCH_ID) from TEST_TASK tt2 where tt2.STATUS = 0
+    )
+  </select>
+  <select id="selectList" parameterType="com.cathay.bcsRegression.entity.TestTask" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from TEST_TASK
+    where 1 = 1
+    <if test="batchId != null">
+      AND BATCH_ID = #{batchId,jdbcType=BIGINT}
+    </if>
+    <if test="caseId != null">
+      AND CASE_ID = #{caseId,jdbcType=BIGINT}
+    </if>
+    <if test="status != null">
+      AND STATUS = #{status,jdbcType=INTEGER}
+    </if>
+    <if test="currentProcedureSeq != null">
+      AND CURRENT_PROCEDURE_SEQ = #{currentProcedureSeq,jdbcType=INTEGER}
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from TEST_TASK
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.cathay.bcsRegression.entity.TestTask">
+    insert into TEST_TASK
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="batchId != null">
+        BATCH_ID,
+      </if>
+      <if test="caseId != null">
+        CASE_ID,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="currentProcedureSeq != null">
+        CURRENT_PROCEDURE_SEQ,
+      </if>
+      <if test="logUrl != null">
+        LOG_URL,
+      </if>
+      <if test="isDelete != null">
+        IS_DELETE,
+      </if>
+      <if test="createdBy != null">
+        CREATED_BY,
+      </if>
+      <if test="updatedBy != null">
+        UPDATED_BY,
+      </if>
+      VERSION
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="batchId != null">
+        #{batchId,jdbcType=BIGINT},
+      </if>
+      <if test="caseId != null">
+        #{caseId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="currentProcedureSeq != null">
+        #{currentProcedureSeq,jdbcType=INTEGER},
+      </if>
+      <if test="logUrl != null">
+        #{logUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedBy != null">
+        #{updatedBy,jdbcType=VARCHAR},
+      </if>
+        1
+    </trim>
+  </insert>
+  <update id="update" parameterType="com.cathay.bcsRegression.entity.TestTask">
+    update TEST_TASK
+    <set>
+      <if test="batchId != null">
+        BATCH_ID = #{batchId,jdbcType=BIGINT},
+      </if>
+      <if test="caseId != null">
+        CASE_ID = #{caseId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="currentProcedureSeq != null">
+        CURRENT_PROCEDURE_SEQ = #{currentProcedureSeq,jdbcType=INTEGER},
+      </if>
+      <if test="logUrl != null">
+        LOG_URL = #{logUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        VERSION = #{version,jdbcType=INTEGER} + 1,
+      </if>
+      <if test="isDelete != null">
+        IS_DELETE = #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="createdBy != null">
+        CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedBy != null">
+        UPDATED_BY = #{updatedBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where 1 = 1
+        <if test="id != null">
+            and id = #{id,jdbcType=BIGINT}
+        </if>
+        <if test="batchId != null">
+          and BATCH_ID = #{batchId,jdbcType=BIGINT}
+        </if>
+        <if test="caseId != null">
+          and CASE_ID = #{caseId,jdbcType=BIGINT}
+        </if>
+        <if test="version != null">
+          and VERSION = #{version,jdbcType=INTEGER}
+        </if>
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cathay.bcsRegression.entity.TestTask">
+    update TEST_TASK
+    set BATCH_ID = #{batchId,jdbcType=BIGINT},
+      CASE_ID = #{caseId,jdbcType=BIGINT},
+      STATUS = #{status,jdbcType=INTEGER},
+      CURRENT_PROCEDURE_SEQ = #{currentProcedureSeq,jdbcType=INTEGER},
+      LOG_URL = #{logUrl,jdbcType=VARCHAR},
+      VERSION = #{version,jdbcType=INTEGER},
+      IS_DELETE = #{isDelete,jdbcType=INTEGER},
+      CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      CREATED_TIME = #{createdTime,jdbcType=TIMESTAMP},
+      UPDATED_BY = #{updatedBy,jdbcType=VARCHAR},
+      UPDATED_TIME = #{updatedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

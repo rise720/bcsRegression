@@ -1,0 +1,34 @@
+server:
+  port: 8090
+  servlet:
+    context-path: /bcsRegression
+
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    #主数据源mysql
+    regression:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbc-url: jdbc:mysql://43.129.177.182:3306/REGRESSION_TEST?useUnicode=true&characterEncoding=UTF-8&useSSL=false&zeroDateTimeBehavior=convertToNull
+      username: root
+      password: abc123!
+    #副数据源db2
+    bcs:
+      driver-class-name: com.ibm.db2.jcc.DB2Driver
+      jdbc-url: jdbc:db2://10.20.38.55:60000/CXLDB
+      username: db2user
+      password: db2ibmuser
+logging:
+  config: classpath:log4j2/log4j2-dev.xml
+
+task:
+  upload:
+    rootPath: c:/temp/
+    charset: GBK
+  execute:
+    config:
+      path: "C:\\localProjects\\bcsJar\\config\\init\\config.properties"
+
+
